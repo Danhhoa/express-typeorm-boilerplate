@@ -8,32 +8,13 @@ import { BaseEntity } from '../entities/base/base.entity';
 import { IPagination } from '../interfaces/common.interface';
 
 export default class ApiUtility {
-  static getCookieFromRequest(req: Request, key: string) {
-    if (req.headers.authorization) {
-      return req.headers.authorization;
-    }
-
-    if (req.headers.cookie) {
-      const results = req.headers.cookie.split(';');
-      const filtered = results.filter((result: string) => {
-        return result.startsWith(`${key}=`);
-      });
-
-      if (filtered.length > 0) {
-        return filtered[0].split('=')[1];
-      }
-    }
-
-    return null;
-  }
-
   static sanitizeData(data: BaseEntity) {
     const { createdAt, updatedAt, ...basicData } = data;
     return basicData;
   }
 
   static sanitizeUser(user: User) {
-    const { password, isDeleted, ...basicUser } = user;
+    const { password, ...basicUser } = user;
     return basicUser;
   }
 

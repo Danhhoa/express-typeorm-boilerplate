@@ -1,23 +1,25 @@
 require('dotenv').config();
 
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
 import logger from './configs/logger.config';
-import app from './configs/express.config';
-
-const PORT = process.env.PORT || 5000;
+import app from './configs/server.config';
+import envConfig from './configs/env.config';
+import { initDB } from './init/database';
 
 const connect = async () => {
-  try {
-    const connection = await createConnection(); // Connect to the DB that is setup in the ormconfig.js
-    await connection.runMigrations(); // Run all migrations
-    logger.info('Connect to database successfully');
-    app.listen(PORT, () => {
-      logger.info(`Server running at ${PORT}`);
-    });
-  } catch (e) {
-    logger.info(`The connection to database was failed with error: ${e}`);
-  }
-}
+    try {
+        initDB();
+
+        app.listen(envConfig.app.port, () => {
+            logger.info(
+                `Server running at ${envConfig.app.host}:${envConfig.app.port}`,
+            );
+        });
+    } catch (e) {
+        logger.info(
+            `The connection to database was failed with error: ${e}`,
+        );
+    }
+};
 
 connect();

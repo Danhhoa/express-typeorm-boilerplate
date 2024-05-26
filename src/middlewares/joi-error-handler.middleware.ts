@@ -25,7 +25,7 @@ export default (
       message: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST),
       details:
         err.details &&
-        err.details.map(err => ({
+        err.details.map((err) => ({
           message: err.message,
           param: err.path,
         })),

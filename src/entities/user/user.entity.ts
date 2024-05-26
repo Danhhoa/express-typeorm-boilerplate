@@ -1,33 +1,32 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  Unique,
+  OneToMany,
+} from 'typeorm';
 
 // Entities
 import { BaseEntity } from '../base/base.entity';
 
-@Entity('user', { orderBy: { id: 'DESC' } })
+@Entity('user')
 export class User extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @PrimaryGeneratedColumn({ type: 'int' })
-  id: number;
-
-  @Column({ length: 100, nullable: false })
+  @Column({ nullable: false })
   @Unique(['email'])
   email: string;
 
-  @Column({ length: 100, nullable: false, select: false })
+  @Column({ nullable: false, select: false })
   password: string;
 
-  @Column({ length: 255, nullable: false })
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column({ length: 255, nullable: false })
+  @Column({ nullable: true })
   lastName: string;
 
-  @Column({ default: false })
-  isDeleted: boolean;
-
-  toJSON() {
-    delete this.isDeleted;
-    return this;
-  }
-
+  @Column({ nullable: true })
+  role: string;
 }
