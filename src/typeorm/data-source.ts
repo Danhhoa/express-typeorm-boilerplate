@@ -11,14 +11,20 @@ const AppDataSource = new DataSource({
     database: envConfig.database.dbName,
     synchronize: false,
     entities:
-        process.env.NODE_ENV !== 'production'
-            ? ['**/**.entity.ts']
-            : ['dist/**/*.entity.js'],
+        process.env.NODE_ENV === 'production'
+            ? ['dist/**/*.entity.js']
+            : ['**/**.entity.ts'],
     logging: process.env.NODE_ENV !== 'production',
-    migrations: [
-        'src/typeorm/migrations/*.{js,ts}',
-        'src/typeorm/seeds/*.{js,ts}',
-    ],
+    migrations:
+        process.env.NODE_ENV === 'production'
+            ? [
+                  'dist/typeorm/migrations/*.{js}',
+                  'dist/typeorm/seeds/*.{js}',
+              ]
+            : [
+                  'src/typeorm/migrations/*.{js,ts}',
+                  'src/typeorm/seeds/*.{js,ts}',
+              ],
     namingStrategy: new SnakeNamingStrategy(),
 });
 

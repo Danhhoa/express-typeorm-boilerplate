@@ -12,7 +12,7 @@ const connect = async () => {
 
         app.listen(envConfig.app.port, () => {
             logger.info(
-                `Server running at ${envConfig.app.host}:${envConfig.app.port}`,
+                `Server running at ${envConfig.app.host}:${envConfig.app.port} with NODE_ENV: ${envConfig.nodeEnv}`,
             );
         });
     } catch (e) {
