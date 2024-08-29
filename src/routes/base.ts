@@ -5,12 +5,13 @@ import { HTTPError } from '@/errors/base';
 import { IBaseError } from '@/interfaces/error.interface';
 import * as _ from 'lodash';
 import { IPaginationReq } from '../interfaces/common.interface';
+import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
 const CHANNEL_ID_NOTIFICATION_GROUP =
     process.env.CHANNEL_ID_NOTIFICATION_GROUP;
 
 export class BaseRouter {
-    onError(res: Response, error: IBaseError) {
+    onError(res: Response, error: any) {
         // const userAgent = res.req.headers['user-agent'] || undefined;
         // const dataHeader = res.req.headers;
         // if (!userAgent.includes('Postman')) {
@@ -57,6 +58,16 @@ export class BaseRouter {
             });
         }
 
+        if (error.isJoi) {
+            const errorRes = {
+                code: StatusCodes.BAD_REQUEST,
+                message: error.details && error.details[0].message,
+            };
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ success: false, error: errorRes });
+        }
+
         return res.status(500).json({
             success: false,
             error: {
@@ -66,10 +77,7 @@ export class BaseRouter {
     }
 
     onSuccess = (res: Response, data: any, status: number = 200) => {
-        res.status(status);
-        let responseData: any = { success: true, data };
-
-        res.json(responseData);
+        res.status(status).json({ success: true, code: status, data });
     };
 
     onSuccessAsList(
@@ -81,6 +89,7 @@ export class BaseRouter {
         const page = _.floor(pagination.offset / pagination.limit) + 1;
 
         return res.json({
+            success: true,
             code: 200,
             data,
             pagination: {

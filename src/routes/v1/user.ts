@@ -1,9 +1,7 @@
-import { HTTPError } from '@/errors/base';
-import { Request, Router, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import { BaseRouter } from '../base';
 import { userController } from '@/controllers';
-import { IPaginationReq } from '@/interfaces/common.interface';
+import { loginSchema } from '@/validations/schemas/user.schema';
+import { Request, Response, Router } from 'express';
+import { BaseRouter } from '../base';
 
 class UserRouter extends BaseRouter {
     router: Router;
@@ -11,15 +9,20 @@ class UserRouter extends BaseRouter {
         super();
         this.router = Router();
         this.router.get('/', this.route(this.allStudent));
+        this.router.post('/login', this.route(this.login));
+    }
+
+    async login(req: Request, res: Response) {
+        const body = req.body;
+
+        await loginSchema.validateAsync(body);
+
+        return this.onSuccess(res, true);
     }
 
     async allStudent(req: Request, res: Response) {
         const { page, limit } = req.query;
-        // throw new HTTPError({
-        //     message: 'loi roi',
-        //     code: StatusCodes.CONFLICT,
-        //     messageCode: 'BLA',
-        // });
+
         const result = await userController.allStudent();
 
         return this.onSuccessAsList(res, result, {
