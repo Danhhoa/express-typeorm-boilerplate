@@ -18,3 +18,8 @@ export interface IPagination {
     nextPage: number | null;
     totalItems: number;
 }
+
+export interface IPaginationReq {
+    offset: number;
+    limit: number;
+}

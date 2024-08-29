@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import httpStatusCodes from 'http-status-codes';
 
-import { IPagination } from '../interfaces/common.interface';
-import { IBaseError } from '@/interfaces/error.interface';
-import * as _ from 'lodash';
 import logger from '@/configs/logger.config';
 import { HTTPError } from '@/errors/base';
+import { IBaseError } from '@/interfaces/error.interface';
+import * as _ from 'lodash';
+import { IPaginationReq } from '../interfaces/common.interface';
 
 const CHANNEL_ID_NOTIFICATION_GROUP =
     process.env.CHANNEL_ID_NOTIFICATION_GROUP;
@@ -49,8 +48,7 @@ export class BaseRouter {
         // }
 
         console.error(error);
-        logger.info(error instanceof HTTPError);
-        logger.error({ error: error.message, errorCode: error.code });
+        logger.error(error?.message);
 
         if (error instanceof HTTPError) {
             return res.status(error.tupleErrorParams.code).json({
@@ -61,7 +59,9 @@ export class BaseRouter {
 
         return res.status(500).json({
             success: false,
-            error: { message: error.message },
+            error: {
+                message: error?.message || 'UNEXPECTED',
+            },
         });
     }
 
@@ -75,39 +75,23 @@ export class BaseRouter {
     onSuccessAsList(
         res: Response,
         data: any = [],
-        pagination: {
-            offset: number;
-            limit: number;
-        },
+        pagination?: IPaginationReq,
     ) {
         const total = data.count > 0 ? data.count : 0;
         const page = _.floor(pagination.offset / pagination.limit) + 1;
 
         return res.json({
             code: 200,
-            results: data,
+            data,
             pagination: {
                 total: total,
-                current_page: page,
-                next_page: page + 1,
-                prev_page: page - 1,
-                limit: pagination.limit,
+                currentPage: page,
+                nextPage: page + 1,
+                prevPage: page - 1,
+                limit: Number(pagination.limit),
             },
         });
     }
-
-    static error = (
-        res: Response,
-        status: number = 400,
-        error: string = httpStatusCodes.getStatusText(status),
-    ) => {
-        res.status(status).json({
-            error: {
-                message: error,
-            },
-            success: false,
-        });
-    };
 
     route<T>(func: (req: Request, rep: Response) => Promise<T>) {
         return (req: Request, res: Response) =>
