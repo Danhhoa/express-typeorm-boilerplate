@@ -4,7 +4,7 @@ import 'reflect-metadata';
 import logger from './configs/logger.config';
 import app from './configs/server.config';
 import envConfig from './configs/env.config';
-import { initDB } from './init/database';
+import { initDB } from './configs/database.config';
 
 const connect = async () => {
     try {
@@ -12,7 +12,7 @@ const connect = async () => {
 
         app.listen(envConfig.app.port, () => {
             logger.info(
-                `Server running at ${envConfig.app.host}:${envConfig.app.port} with NODE_ENV: ${envConfig.nodeEnv}`,
+                `Server is running at ${envConfig.app.host}:${envConfig.app.port} with NODE_ENV: ${envConfig.nodeEnv}`,
             );
         });
     } catch (e) {
