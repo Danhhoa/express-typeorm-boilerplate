@@ -1,14 +1,12 @@
-import * as bodyParser from 'body-parser';
-import express from 'express';
 import cors from 'cors';
+import express from 'express';
 import morgan from 'morgan';
 
-import indexRoute from '../routes';
-import joiErrorHandler from '../middlewares/joi-error-handler.middleware';
 import {
-    notFoundErrorHandler,
     errorHandler,
+    notFoundErrorHandler,
 } from '../middlewares/api-error-handler.middleware';
+import joiErrorHandler from '../middlewares/joi-error-handler.middleware';
 import router from '../routes';
 
 const app = express();
@@ -53,10 +51,10 @@ app.use(router);
 // app.use(constants.APPLICATION.url.basePath, indexRoute);
 
 // Joi Error Handler
-app.use(joiErrorHandler);
+// app.use(joiErrorHandler);
 
-// Error Handler
-app.use(notFoundErrorHandler);
-app.use(errorHandler);
+// // Error Handler
+// app.use(notFoundErrorHandler);
+// app.use(errorHandler);
 
 export default app;

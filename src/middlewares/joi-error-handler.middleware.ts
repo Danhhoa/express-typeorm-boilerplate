@@ -1,13 +1,13 @@
+import { IBaseError } from '@/interfaces/error.interface';
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
-import { IError } from './api-error-handler.middleware';
 
 interface IJoiErrorDetail {
     message?: string;
     path?: string;
 }
 
-interface IJoiError extends IError {
+interface IJoiError extends IBaseError {
     isJoi?: boolean;
     // tslint:disable-next-line: prefer-array-literal
     details?: Array<IJoiErrorDetail>;
