@@ -2,12 +2,10 @@ import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
 
-import {
-    errorHandler,
-    notFoundErrorHandler,
-} from '../middlewares/api-error-handler.middleware';
-import joiErrorHandler from '../middlewares/joi-error-handler.middleware';
+import * as swaggerUi from 'swagger-ui-express';
+
 import router from '../routes';
+import { swaggerDocument } from './swagger.config';
 
 const app = express();
 
@@ -43,6 +41,14 @@ app.use(cors(corsOption));
 app.use(express.json());
 
 app.use(morgan('dev'));
+
+app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument, {
+        swaggerOptions: { displayRequestDuration: true },
+    }),
+);
 
 // app.use(authenticate);
 

@@ -1,12 +1,7 @@
-import * as express from 'express';
+import { Router } from 'express';
+import routerV1 from './v1';
 
-import userRouter from './v1/user';
-
-const router = express.Router();
-
-router.use('/user', userRouter);
-router.use('/', (req: express.Request, res: express.Response) => {
-    return res.json(`Server is running: ${new Date()}`);
-});
+const router = Router();
+router.use('/api/v1', routerV1);
 
 export default router;

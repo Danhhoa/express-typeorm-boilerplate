@@ -2,6 +2,7 @@ const envConfig = {
     app: {
         host: process.env.HOST,
         port: process.env.PORT,
+        name: process.env.PROJECT_NAME || 'UNKNOWN',
     },
     database: {
         host: process.env.DB_HOST,
