@@ -1,12 +1,9 @@
 import {
-    Column,
     Entity,
     PrimaryGeneratedColumn,
+    Column,
     Unique,
-    OneToMany,
 } from 'typeorm';
-
-// Entities
 import { BaseEntity } from '../base.entity';
 
 @Entity('user')

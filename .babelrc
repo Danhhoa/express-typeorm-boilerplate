@@ -1,0 +1,25 @@
+{
+	"presets": [["@babel/preset-env"]],
+	"plugins": [
+		//   ["babel-plugin-transform-builtin-extend", {
+		//       "globals": ["Error", "Array"],
+		//       "approximate": true
+		//   }],
+		[
+			"babel-plugin-root-import",
+			{
+				"rootPathSuffix": "build",
+				"rootPathPrefix": "@"
+			}
+		],
+		//   ["transform-runtime", {
+		//     "polyfill": false,
+		//     "regenerator": true
+		//   }],
+		["@babel/plugin-transform-runtime"],
+		"@babel/plugin-syntax-import-source",
+		"istanbul"
+	],
+	"sourceMaps": "inline",
+	"retainLines": true
+}
