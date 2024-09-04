@@ -5,7 +5,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 const AppDataSource = new DataSource({
     type: 'postgres',
     host: envConfig.database.host,
-    port: parseInt(envConfig.database.port),
+    port: Number(envConfig.database.port),
+    // url: envConfig.database.url,
     username: envConfig.database.username,
     password: envConfig.database.password,
     database: envConfig.database.dbName,

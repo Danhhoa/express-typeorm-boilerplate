@@ -10,6 +10,7 @@ const envConfig = {
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         dbName: process.env.DB_NAME,
+        url: process.env.DB_URL,
     },
     nodeEnv: process.env.NODE_ENV || 'development',
 };

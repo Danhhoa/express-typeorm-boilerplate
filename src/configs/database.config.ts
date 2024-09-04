@@ -1,4 +1,5 @@
 import AppDataSource from '../typeorm/data-source';
+import envConfig from './env.config';
 import logger from './logger.config';
 
 export const initDB = () => {
