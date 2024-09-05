@@ -18,7 +18,7 @@
         "build-babel": "npx babel build --out-dir dist --source-maps",
         "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
         "migration:generate": "npm run typeorm migration:generate src/typeorm/migrations/$npm_config_name -- -d src/typeorm/data-source.ts",
-        "migration:create": "npm run typeorm migration:create src/typeorm/migrations/$npm_config_name -- -d src/typeorm/data-source.ts",
+        "migration:create": "npm run typeorm migration:create src/typeorm/migrations/$npm_config_name",
         "migration:run": "npm run typeorm migration:run -- -d src/typeorm/data-source.ts",
         "migration:revert": "npm run typeorm migration:revert -- -d src/typeorm/data-source.ts"
     },
