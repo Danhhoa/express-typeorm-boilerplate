@@ -3,10 +3,12 @@ import { IFindAndCountResponse } from '@/interfaces/typeorm.interface';
 import {
     DeepPartial,
     DeleteResult,
+    EntityManager,
     FindManyOptions,
     FindOneOptions,
     FindOptionsWhere,
     In,
+    InsertResult,
     Repository,
     UpdateResult,
 } from 'typeorm';
@@ -15,7 +17,45 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
 export class BaseService<Entity> implements IBaseService<Entity> {
     constructor(public repository: Repository<Entity>) {}
 
-    public async findAndCount(
+    async withTnx(
+        runInTransaction: (
+            entityManager: EntityManager,
+        ) => Promise<unknown>,
+    ): Promise<any> {
+        try {
+            const manager = this.repository.manager;
+
+            return await manager.transaction(runInTransaction);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async insert(
+        entity:
+            | QueryDeepPartialEntity<Entity>
+            | QueryDeepPartialEntity<Entity>[],
+    ): Promise<InsertResult> {
+        const result = await this.repository.insert(entity);
+
+        return result;
+    }
+
+    async insertWithTnx(
+        entityManager: EntityManager,
+        entity:
+            | QueryDeepPartialEntity<Entity>
+            | QueryDeepPartialEntity<Entity>[],
+    ): Promise<InsertResult> {
+        const result = await entityManager.insert(
+            this.repository.target,
+            entity,
+        );
+
+        return result;
+    }
+
+    async findAndCount(
         where?: FindOptionsWhere<Entity>,
         options?: FindManyOptions<Entity>,
     ): Promise<IFindAndCountResponse<Entity>> {
@@ -30,7 +70,7 @@ export class BaseService<Entity> implements IBaseService<Entity> {
         };
     }
 
-    public async findById(
+    async findById(
         id: string,
         options?: FindOneOptions<Entity>,
     ): Promise<Entity> {
@@ -40,7 +80,7 @@ export class BaseService<Entity> implements IBaseService<Entity> {
         });
     }
 
-    public async findByIds(
+    async findByIds(
         ids: string[],
         options?: FindOneOptions<Entity>,
     ): Promise<Entity[]> {
@@ -50,13 +90,23 @@ export class BaseService<Entity> implements IBaseService<Entity> {
         });
     }
 
-    public async save(data: DeepPartial<Entity>): Promise<Entity> {
+    async save(data: DeepPartial<Entity>): Promise<Entity> {
         return this.repository.save(data);
     }
 
-    public async bulkSave(
-        data: DeepPartial<Entity[]>,
-    ): Promise<Entity[]> {
+    async saveWithTnx(
+        entityManager: EntityManager,
+        entity: DeepPartial<Entity>,
+    ): Promise<DeepPartial<Entity>> {
+        const result = await entityManager.save(
+            this.repository.target,
+            entity,
+        );
+
+        return result;
+    }
+
+    async bulkSave(data: DeepPartial<Entity[]>): Promise<Entity[]> {
         return this.repository.save(data);
     }
 
@@ -72,56 +122,29 @@ export class BaseService<Entity> implements IBaseService<Entity> {
         return result;
     }
 
-    public async delete(
+    async updateWithTnx(
+        entityManager: EntityManager,
+        where: FindOptionsWhere<Entity>,
+        update: QueryDeepPartialEntity<Entity>,
+    ): Promise<UpdateResult> {
+        const result = await entityManager.update(
+            this.repository.target,
+            where,
+            update,
+        );
+
+        return result;
+    }
+
+    async delete(
         where: FindOptionsWhere<Entity>,
     ): Promise<DeleteResult> {
         return await this.repository.softDelete(where);
     }
 
-    public async hardDelete(
+    async hardDelete(
         where: FindOptionsWhere<Entity>,
     ): Promise<DeleteResult> {
         return await this.repository.delete(where);
     }
-
-    // public async paginate(
-    //     dto: PaginateDTO,
-    //     filters?: FindOptionsWhere<any>,
-    //     sort?: FindOptionsOrder<any>,
-    //     relations?: string[],
-    // ): Promise<PaginationResult<T>> {
-    //     const totalCount = await this.repository.count({
-    //         where: filters,
-    //     });
-    //     if (totalCount === 0) {
-    //         return {
-    //             meta: {
-    //                 total: 0,
-    //                 currentPage: parseInt(dto.page),
-    //                 perPage: 0,
-    //             },
-    //             data: [],
-    //         };
-    //     }
-
-    //     const data = await this.repository.find({
-    //         take: parseInt(dto.perPage),
-    //         skip: (parseInt(dto.page) - 1) * parseInt(dto.perPage),
-    //         relations,
-    //         where: {
-    //             deletedAt: IsNull(),
-    //             ...filters,
-    //         },
-    //         order: sort,
-    //     });
-
-    //     return {
-    //         meta: {
-    //             total: totalCount,
-    //             currentPage: parseInt(dto.page),
-    //             perPage: parseInt(dto.perPage),
-    //         },
-    //         data,
-    //     };
-    // }
 }

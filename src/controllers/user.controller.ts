@@ -1,7 +1,11 @@
 import { userService } from '@/services';
+import { BaseController } from './base.controller';
 
-export class UserController {
+export class UserController extends BaseController<typeof userService> {
+    constructor() {
+        super(userService);
+    }
     async allStudent() {
-        return await userService.allStudent();
+        return this.service.allStudent();
     }
 }

@@ -2,7 +2,7 @@ import envConfig from '../configs/env.config';
 import { DataSource } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-const AppDataSource = new DataSource({
+const dataSource = new DataSource({
     type: 'postgres',
     host: envConfig.database.host,
     port: Number(envConfig.database.port),
@@ -29,4 +29,4 @@ const AppDataSource = new DataSource({
     namingStrategy: new SnakeNamingStrategy(),
 });
 
-export default AppDataSource;
+export default dataSource;
