@@ -5,6 +5,7 @@ const envConfig = {
         host: process.env.HOST,
         port: process.env.PORT,
         name: process.env.PROJECT_NAME || 'UNKNOWN',
+        tokenSecret: process.env.TOKEN_SECRET || '123456',
     },
     database: {
         host: process.env.DB_HOST,

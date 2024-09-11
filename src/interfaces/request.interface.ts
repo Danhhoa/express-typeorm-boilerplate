@@ -1,6 +1,16 @@
+import { User } from '@/entities/user/user.entity';
 import { Request } from 'express';
-import { User } from '../entities/user/user.entity';
 
 export default interface IRequest extends Request {
-  user: User;
+    tokenInfo?: {
+        role: string;
+        exp: number;
+        user?: User;
+        [x: string]: any;
+    };
+    pagination?: {
+        page: number;
+        limit: number;
+        offset: number;
+    };
 }
