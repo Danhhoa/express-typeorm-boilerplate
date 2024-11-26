@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 
 interface IJwtDecoded {
+    id: string;
     email: string;
     role: any;
     iat: number;

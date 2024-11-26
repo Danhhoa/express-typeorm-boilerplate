@@ -1,5 +1,5 @@
 import { User } from '@/entities/user/user.entity';
-import { BaseService } from '../base.service';
+import { BaseService } from './base.service';
 import dataSource from '@/typeorm/data-source';
 
 class UserService extends BaseService<User> {

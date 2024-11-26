@@ -1,4 +1,4 @@
-import userService from './user/user.service';
+import userService from './user.service';
 
 // USER
 

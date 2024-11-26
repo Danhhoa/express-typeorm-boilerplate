@@ -12,7 +12,6 @@ export class User extends BaseEntity {
     id: string;
 
     @Column({ nullable: false })
-    @Unique(['email'])
     email: string;
 
     @Column({ nullable: false, select: false })
