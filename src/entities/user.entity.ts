@@ -4,7 +4,7 @@ import {
     Column,
     Unique,
 } from 'typeorm';
-import { BaseEntity } from '../base.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity('user')
 export class User extends BaseEntity {

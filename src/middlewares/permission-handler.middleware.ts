@@ -1,17 +1,17 @@
-import { Response, NextFunction } from 'express';
-import httpStatusCodes from 'http-status-codes';
+// import { Response, NextFunction } from 'express';
+// import httpStatusCodes from 'http-status-codes';
 
-// Interfaces
-import IRequest from '../interfaces/request.interface';
+// // Interfaces
+// import IRequest from '../interfaces/request.interface';
 
-// Utilities
-import ApiResponse from '../utilities/api-response.utility';
+// // Utilities
+// import ApiResponse from '../utilities/api-response.utility';
 
-export const isAdmin = () => {
-    return async (req: IRequest, res: Response, next: NextFunction) => {
-        if (req.user.role !== 'ADMIN') {
-            return ApiResponse.error(res, httpStatusCodes.UNAUTHORIZED);
-        }
-        next();
-    };
-};
+// export const isAdmin = () => {
+//     return async (req: IRequest, res: Response, next: NextFunction) => {
+//         if (req.user.role !== 'ADMIN') {
+//             return ApiResponse.error(res, httpStatusCodes.UNAUTHORIZED);
+//         }
+//         next();
+//     };
+// };

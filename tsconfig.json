@@ -23,5 +23,9 @@
         }
     },
     "include": ["src/**/*"],
-    "exclude": []
+    "exclude": [],
+    "tsc-alias": {
+        "resolveFullPaths": true,
+        "verbose": false
+    },
 }
