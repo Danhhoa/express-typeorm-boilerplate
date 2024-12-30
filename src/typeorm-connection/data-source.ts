@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 const dataSource = new DataSource({
-    type: 'postgres',
+    type: 'mysql',
     host: envConfig.database.host,
     port: Number(envConfig.database.port),
     // url: envConfig.database.url,

@@ -1,4 +1,4 @@
-import { User } from '@/entities/user/user.entity';
+import { User } from '@/entities/user.entity';
 import { BaseService } from './base.service';
 import dataSource from '@/typeorm-connection/data-source';
 
