@@ -6,7 +6,6 @@ const dataSource = new DataSource({
     type: 'mysql',
     host: envConfig.database.host,
     port: Number(envConfig.database.port),
-    // url: envConfig.database.url,
     username: envConfig.database.username,
     password: envConfig.database.password,
     database: envConfig.database.dbName,
@@ -19,14 +18,15 @@ const dataSource = new DataSource({
     migrations:
         process.env.NODE_ENV === 'production'
             ? [
-                  'dist/typeorm/migrations/*.{js}',
-                  'dist/typeorm/seeds/*.{js}',
+                  'dist/typeorm-connection/migrations/*.{js}',
+                  'dist/typeorm-connection/seeds/*.{js}',
               ]
             : [
-                  'src/typeorm/migrations/*.{js,ts}',
-                  'src/typeorm/seeds/*.{js,ts}',
+                  'src/typeorm-connection/migrations/*.{js,ts}',
+                  'src/typeorm-connection/seeds/*.{js,ts}',
               ],
     namingStrategy: new SnakeNamingStrategy(),
+    timezone: 'Z', // Mysql store default timestamp as UTC and will convert to local when query, this line to say use UTC and no need to convert
 });
 
 export default dataSource;

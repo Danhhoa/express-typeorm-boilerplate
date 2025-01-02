@@ -23,10 +23,10 @@
         "migration:create": "npm run typeorm migration:create src/typeorm-connection/migrations/$npm_config_name",
         "migration:run": "npm run typeorm migration:run -- -d src/typeorm/data-source.ts",
         "migration:revert": "npm run typeorm migration:revert -- -d src/typeorm/data-source.ts",
-        "migration:generate:win": "cross-var npm run typeorm:win migration:generate src/typeorm-connection/migrations/$npm_config_name -- -d src/typeorm/data-source.ts",
+        "migration:generate:win": "cross-var npm run typeorm:win migration:generate src/typeorm-connection/migrations/$npm_config_name -- -d src/typeorm-connection/data-source.ts",
         "migration:create:win": "cross-var npm run typeorm:win migration:create src/typeorm-connection/migrations/$npm_config_name",
-        "migration:run:win": "npm run typeorm:win migration:run -- -d src/typeorm/data-source.ts",
-        "migration:revert:win": "npm run typeorm:win migration:revert -- -d src/typeorm/data-source.ts"
+        "migration:run:win": "cross-var npm run typeorm:win migration:run -- -d src/typeorm-connection/data-source.ts",
+        "migration:revert:win": "cross-var npm run typeorm:win migration:revert -- -d src/typeorm-connection/data-source.ts"
     },
     "devDependencies": {
         "@babel/cli": "^7.25.6",
