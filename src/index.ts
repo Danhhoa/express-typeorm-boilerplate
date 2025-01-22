@@ -5,7 +5,7 @@ import logger from './configs/logger.config';
 import app from './configs/server.config';
 import envConfig from './configs/env.config';
 import { initDB } from './configs/database.config';
-import socketService from './services/socket.service';
+import socketService from './shared/services/socket/socket.service';
 
 const connect = async () => {
     try {

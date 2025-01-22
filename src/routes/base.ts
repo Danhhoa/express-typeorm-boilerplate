@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
 import logger from '@/configs/logger.config';
-import { HTTPError } from '@/errors/base';
-import { IBaseError } from '@/interfaces/error.interface';
+import { HTTPError } from '@/shared/errors/http.error';
+import { IBaseError } from '@/shared/interfaces/error.interface';
 import * as _ from 'lodash';
-import { IPaginationReq } from '../interfaces/common.interface';
+import { IPaginationReq } from '../shared/interfaces/common.interface';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
 const CHANNEL_ID_NOTIFICATION_GROUP =

@@ -1,0 +1,28 @@
+import { BaseEntity } from '@/shared/base/base.entity';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    Unique,
+} from 'typeorm';
+
+@Entity('user')
+export class User extends BaseEntity {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column({ nullable: false })
+    email: string;
+
+    @Column({ nullable: false, select: false })
+    password: string;
+
+    @Column({ nullable: true })
+    firstName: string;
+
+    @Column({ nullable: true })
+    lastName: string;
+
+    @Column({ nullable: true })
+    role: string;
+}

@@ -1,5 +1,4 @@
-import { userController } from '@/controllers';
-import { loginSchema } from '@/validations/schemas/user.schema';
+import { loginSchema } from '@/modules/auth/validations/auth.schema';
 import { Request, Response, Router } from 'express';
 import { BaseRouter } from '../base';
 
